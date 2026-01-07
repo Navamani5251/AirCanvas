@@ -2,7 +2,7 @@ import streamlit as st
 import cv2
 import numpy as np
 from canvas import DrawingCanvas
-from gesture_detector import GestureDetector
+from Gesture_detector import GestureDetector
 from utils import blend_frames
 
 st.set_page_config(page_title="Air Canvas Web", layout="centered")
@@ -49,3 +49,4 @@ if start:
                 open("drawing.png", "rb"),
                 file_name="air_canvas.png"
             )
+

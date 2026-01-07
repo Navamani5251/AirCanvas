@@ -1,52 +1,20 @@
 import streamlit as st
-import cv2
-import numpy as np
-from canvas import DrawingCanvas
-from Gesture_detector import GestureDetector
-from utils import blend_frames
 
-st.set_page_config(page_title="Air Canvas Web", layout="centered")
-st.title("🖐️ Air Canvas Web")
+st.set_page_config(page_title="Air Canvas", layout="centered")
 
-start = st.checkbox("Start Camera")
-download = st.button("Download Drawing")
+st.title("🎨 Air Canvas – Gesture Based Drawing")
 
-frame_placeholder = st.empty()
-canvas_placeholder = st.empty()
+st.markdown("""
+Air Canvas is a computer vision project that allows users to draw in the air
+using hand gestures detected through a webcam.
 
-if start:
-    cap = cv2.VideoCapture(0)
-    detector = GestureDetector()
-    canvas = None
-    prev_point = None
+⚠️ **Note:**  
+Live webcam drawing works only in local execution due to cloud limitations.
+""")
 
-    while start:
-        ret, frame = cap.read()
-        frame = cv2.flip(frame, 1)
-        h, w = frame.shape[:2]
+st.header("📸 Demo")
+st.video("https://your-demo-video-link")
 
-        if canvas is None:
-            canvas = DrawingCanvas(w, h)
-
-        result = detector.process(frame)
-        cursor = result.cursor
-
-        if result.gesture == "draw" and cursor:
-            if prev_point is None:
-                prev_point = cursor
-            canvas.draw_line(prev_point, cursor)
-            prev_point = cursor
-        else:
-            prev_point = None
-
-        output = blend_frames(frame, canvas.get_image())
-        frame_placeholder.image(output, channels="BGR")
-
-        if download:
-            cv2.imwrite("drawing.png", canvas.get_image())
-            st.download_button(
-                "Download",
-                open("drawing.png", "rb"),
-                file_name="air_canvas.png"
-            )
-
+st.header("⬇️ Download Sample Drawing")
+with open("sample.png", "rb") as f:
+    st.download_button("Download Drawing", f, "drawing.png")

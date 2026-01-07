@@ -7,7 +7,7 @@ from typing import Dict
 import cv2
 
 from canvas import DrawingCanvas
-from gesture_detector import GestureDetector
+from Gesture_detector import GestureDetector
 from utils import GestureFilter, PointSmoother, blend_frames, draw_cursor, put_multiline_text
 
 GESTURE_COLORS: Dict[str, tuple[int, int, int]] = {
@@ -93,4 +93,5 @@ def run() -> None:
 
 
 if __name__ == "__main__":
+
     run()
